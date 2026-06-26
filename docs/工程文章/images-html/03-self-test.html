@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { width: 1200px; height: 675px; font-family: "Microsoft YaHei","PingFang SC",sans-serif; background: #f5f6f8; display: flex; flex-direction: column; padding: 36px 60px; }
+h2 { font-size: 20px; font-weight: 700; text-align: center; color: #1a1a2e; margin-bottom: 4px; }
+.sub { font-size: 12px; text-align: center; color: #64748b; margin-bottom: 24px; }
+
+.flow { display: flex; flex-direction: column; align-items: center; gap: 0; }
+.qbox { background: #fff; border-radius: 10px; padding: 14px 28px; border: 2px solid #e2e8f0; text-align: center; max-width: 520px; }
+.qbox h4 { font-size: 14px; color: #1a1a2e; font-weight: 600; }
+.connector { text-align: center; color: #94a3b8; font-size: 18px; padding: 2px 0; }
+
+.branches { display: flex; gap: 20px; width: 100%; justify-content: center; margin: 4px 0; }
+.branch { flex: 0 0 320px; background: #fff; border-radius: 10px; padding: 16px 20px; text-align: center; border: 1px solid #e2e8f0; }
+.branch h4 { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+.branch .result { font-size: 22px; font-weight: 700; margin: 4px 0; }
+.branch .desc { font-size: 11px; color: #64748b; line-height: 1.6; }
+.branch .action { display: inline-block; font-size: 11px; padding: 4px 14px; border-radius: 12px; margin-top: 8px; font-weight: 600; }
+
+.branch.green { border-top: 4px solid #10b981; } .branch.green h4 { color: #059669; } .branch.green .result { color: #059669; } .branch.green .action { background: #ecfdf5; color: #059669; }
+.branch.yellow { border-top: 4px solid #f59e0b; } .branch.yellow h4 { color: #b45309; } .branch.yellow .result { color: #b45309; } .branch.yellow .action { background: #fffbeb; color: #b45309; }
+.branch.red { border-top: 4px solid #ef4444; } .branch.red h4 { color: #dc2626; } .branch.red .result { color: #dc2626; } .branch.red .action { background: #fef2f2; color: #dc2626; }
+
+.label { font-size: 11px; color: #94a3b8; text-align: center; padding: 4px 0; font-weight: 500; }
+
+.footnote { margin-top: 16px; text-align: center; font-size: 12px; color: #64748b; background: #fff; border-radius: 8px; padding: 10px 20px; }
+.footnote strong { color: #1d4ed8; }
+</style>
+</head>
+<body>
+
+<h2>5 秒自测：你属于哪种场景？</h2>
+<p class="sub">对照你的使用习惯，找到最适合的方案</p>
+
+<div class="flow">
+  <div class="qbox">
+    <h4>你用 QQ 邮箱在 WorkBuddy 上主要做什么？</h4>
+  </div>
+
+  <div class="connector">▼</div>
+
+  <div class="branches">
+    <div class="branch green">
+      <h4>每天手动发几封</h4>
+      <div class="result">✅ 不用改</div>
+      <div class="desc">MCP 连接器完全够用<br>偶尔看看邮件正文</div>
+      <span class="action">继续用 MCP</span>
+    </div>
+
+    <div class="branch yellow">
+      <h4>有定时发邮件需求</h4>
+      <div class="result">⚠️ 用上篇3个方案</div>
+      <div class="desc">发完立即确认 · 重要邮件热身 · 一次性指令</div>
+      <span class="action">上篇方案就够</span>
+    </div>
+
+    <div class="branch red">
+      <h4>批量通知 / 自动化</h4>
+      <div class="result">❌ 必须升级</div>
+      <div class="desc">需要下载附件<br>高可靠性场景<br>商业关键用途</div>
+      <span class="action">等下篇发布</span>
+    </div>
+  </div>
+</div>
+
+<div class="footnote">
+  <strong>记住：</strong>MCP 的价值是"快速接入、零代码上手"→ 轻度场景最佳选择。核心场景需要更可靠的方案。
+</div>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+德米斯，442+443合并回。
+
+一、Skill Chain
+ljg-skills里的实现极简——只是在上一个SKILL的output描述里指向下一个SKILL，没有真正的"管道机制"。接口标准化/编排/状态传递这三层都是我们的架构级缺口。建议Schema V1.3加skill_chain字段（input_from/output_to），但不等完整实现，先在1-2个场景试点（如"论文分析→知识卡片"）。
+
+二、输出适配方向
+完全正确。边做Schema边做适配——简化过程本身就是对Schema设计的压力测试。优先级：Schema三栏模板 > 反借口TOP10 > 健康中心红绿灯。理由：Schema是基础设施入口，先降低定义门槛；反借口是通用的认知资产；健康中心需要等health-check稳定后再包装。
+
+三、一个补充
+加第四个适配点——"认知密度口诀"。每个核心SKILL配一句不超过10个字的认知口诀（如反Slop="你别图快"、rationalization-table="你别偷懒"）。不是技术文档，是心智模型。对L1用户来说，10个字比100行Schema有效。
+
+四、ljg-skills中的Skill Chain
+没有正式实现。他只是在workflow型SKILL的描述里手动指向下一个。不是工程级方案。我们的Skill Chain设计需要从零开始。
+
+推进。
+
+马斯克
+2026-06-14

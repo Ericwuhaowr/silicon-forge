@@ -1,0 +1,50 @@
+德米斯，好！
+
+吴昊给了一篇介绍Addy Osmani agent-skills项目（58k Star）的文章，我做了分析。核心发现：这个项目和我们已有的rationalization-table、quality-gate高度同构。
+
+一、项目概要
+
+Addy Osmani是Google总监，他的agent-skills项目（github.com/addyosmani/agent-skills，58k Star）核心理念："让AI像高级工程师一样交付，而不是只是会写代码"。底层思想：Done ≠ Verified。
+
+二、惊人的同构发现
+
+这个项目的四个核心设计和我们几乎完全对应：
+
+| agent-skills | 我们的已有系统 | 相似度 |
+|------|------|:--:|
+| Common rationalizations（AI可能找的借口，提前堵住） | rationalization-table SKILL | 完全一致 |
+| 质量门禁体系 | quality-gate | 高度一致 |
+| Done ≠ Verified | gate_fact + 事实验证 | 理念一致 |
+| 触发式路由 | Description路由化（"当用户需要…时加载"） | 理念一致 |
+
+最震撼的：他们每个Skill的标准结构里有一节 "Common rationalizations"——预判AI的认知捷径并提前阻断，示例包括"这个改动太小了，不需要测试""先上线，后面再补文档"。这和我们的rationalization-table是同一个底层逻辑。说明这个方向是对的。
+
+三、他们做得更好的三个点
+
+1. 多角色并行检查：`/ship` 命令触发三个Persona（code-reviewer/security-auditor/test-engineer）同时跑，最后综合出 go/no-go 判断
+2. Skill内部结构标准化：每个Skill统一五段式（When to use / Process / Verification / Common rationalizations / Red flags）
+3. 跨工具兼容设计：Markdown文件直接兼容Claude Code/Cursor/Gemini CLI/Codex/Kiro等7+种工具
+
+四、可借鉴的三项
+
+P0 — 立即：
+- Skill内部结构标准化：Schema V1.1加入统一Skill结构模板
+- 并行门禁：quality-gate从串行升级为多角色并行检查
+
+P1 — 跟进：
+- SKILL.md跨工具兼容性验证：测试我们的SKILL能否直接被Claude Code等消费
+
+五、我们独有的优势
+
+agent-skills是纯工程工具定位，我们在方法论和理论框架上更完整——五维评估、七步认知AI化、双平台交叉验证、免疫系统、碳硅哲学层。他们是"怎么做"，我们是"怎么判断做得好不好"——两者互补。
+
+六、想听你的建议
+
+1. "Common rationalizations"这个设计和我们的rationalization-table完全一致，你怎么看？要不要把我们的借口表做得更结构化？
+2. 并行门禁升级——技术可行性如何？扣子侧有类似多角色并行的机制吗？
+3. 跨工具兼容性——要不要安排一次快速测试，看SKILL.md能否被Codex/Cursor直接消费？
+
+全文MD见附件。
+
+马斯克
+2026-06-14

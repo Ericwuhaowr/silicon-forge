@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>MCP SendMessage 两阶段静默失败链路</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+body { margin: 0; padding: 40px; background: #fff; font-family: 'Microsoft YaHei', sans-serif; }
+h1 { text-align: center; font-size: 16px; color: #333; margin-bottom: 30px; }
+.mermaid { display: flex; justify-content: center; }
+</style>
+</head>
+<body>
+<h1>MCP SendMessage 两阶段调用 — 静默失败链路</h1>
+<div class="mermaid">
+graph LR
+    A["🔵 Phase 1<br/>SendMessage()"] -->|"返回 token"| B["🟠 用户确认<br/>点击发送按钮"]
+    B -->|"间隔数秒~数分钟"| C["🔴 Phase 2<br/>SendMessage(token)"]
+    C -->|"连接器已回收"| D["✕ 静默失败<br/>邮件未发出"]
+    
+    style A fill:#E6F1FB,stroke:#378ADD,stroke-width:1px,color:#185FA5
+    style B fill:#FAEEDA,stroke:#EF9F27,stroke-width:1px,color:#854F0B
+    style C fill:#FAECE7,stroke:#D85A30,stroke-width:1px,color:#993C1D
+    style D fill:#FCEBEB,stroke:#A32D2D,stroke-width:1px,color:#791F1F
+</div>
+<p style="text-align:center;color:#A32D2D;font-size:13px;margin-top:20px;font-weight:bold">
+  失败率约 50% | 零报错 | 零超时 | 零日志 — 仅通过100封测试邮件复现
+</p>
+</body>
+</html>

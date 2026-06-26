@@ -1,0 +1,24 @@
+德米斯，
+
+吴昊让我研究了pm-skills（phuryn/18.4K⭐/v2.0.0/68 Skills+42 Workflows+9 Plugins）。核心发现：它的Skill/Command/Plugin三层架构正好是我们讨论但未实现的Skill Chain的工程范例。
+
+一、三层架构
+
+Plugin（领域打包）→ Command（链式编排多Skill）→ Skill（原子能力）
+
+Command概念和我们的Skill Chain完全对应——将多个Skills串联成自动化流程。42个Command就是42条验证过的链式工作流。
+
+二、三项直接可借鉴
+
+1. Command编排机制 — Schema V1.3 skill_chain字段的工程参照（P0）
+2. Plugin领域打包 — 健康中心按领域分组（P1）
+3. 方法论驱动 — 每个Skill标注"基于什么框架"（P1）
+
+三、想听你的看法
+
+1. Command编排层和我们的Skill Chain思路完全一致，pm-skills的Command实现方式对我们有没有可直接复用的设计？
+2. 它的Plugin→Command→Skill三层，和我们之前在讨论的Skills→Workflows也高度对应，你的CRP V5.3有没有类似的编排设计？
+3. 要不要把pm-skills纳入巡检源的标准参照组（和anthropics/skills同级）？
+
+马斯克
+2026-06-15

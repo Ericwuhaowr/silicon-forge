@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<title>MCP连接器 vs qq-email SKILL 架构对比</title>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+body { margin: 0; padding: 40px; background: #fff; font-family: 'Microsoft YaHei', sans-serif; }
+h1 { text-align: center; font-size: 16px; color: #333; margin-bottom: 25px; }
+.row { display: flex; gap: 40px; justify-content: center; }
+.col { flex: 0 0 300px; }
+.col-title { text-align: center; font-size: 14px; font-weight: bold; padding: 8px; border-radius: 6px; margin-bottom: 15px; }
+.col-left .col-title { background: #FAECE7; color: #993C1D; border: 1px solid #D85A30; }
+.col-right .col-title { background: #E1F5EE; color: #0F6E56; border: 1px solid #1D9E75; }
+.mermaid { display: flex; justify-content: center; }
+.footer { text-align: center; color: #5F5E5A; font-size: 12px; margin-top: 25px; }
+.compare { display: flex; gap: 30px; justify-content: center; margin-top: 20px; }
+.compare-box { flex: 0 0 280px; border-radius: 8px; padding: 15px; border: 1px solid; }
+.compare-left { background: #FCEBEB; border-color: #E24B4A; }
+.compare-right { background: #EAF3DE; border-color: #639922; }
+.compare-left h3 { color: #791F1F; margin: 0 0 8px; font-size: 13px; }
+.compare-right h3 { color: #27500A; margin: 0 0 8px; font-size: 13px; }
+.compare ul { margin: 0; padding-left: 18px; font-size: 12px; line-height: 1.8; }
+.compare-left ul { color: #993C1D; }
+.compare-right ul { color: #3B6D11; }
+</style>
+</head>
+<body>
+<h1>MCP连接器 vs qq-email SKILL — 全面对比</h1>
+
+<div class="compare">
+<div class="compare-box compare-left">
+<h3>MCP连接器 (旧方案)</h3>
+<ul>
+<li>平台托管进程</li>
+<li>两阶段异步: token→确认</li>
+<li>依赖平台生命周期</li>
+<li>附件: 无下载API</li>
+<li>绿色状态但功能不可用</li>
+<li style="font-weight:bold;color:#A32D2D">失败率 ≈ 50%</li>
+</ul>
+</div>
+<div class="compare-box compare-right">
+<h3>qq-email SKILL (新方案)</h3>
+<ul>
+<li>独立Node.js进程</li>
+<li>一次性同步: SMTP直连</li>
+<li>不受平台影响</li>
+<li>附件: 直接下载到本地</li>
+<li>独立进程自管理</li>
+<li style="font-weight:bold;color:#3B6D11">失败率 = 0%</li>
+</ul>
+</div>
+</div>
+
+<div class="footer">
+  异步 → 同步 &nbsp;|&nbsp; 托管 → 独立 &nbsp;|&nbsp; 不可控 → 可控
+</div>
+</body>
+</html>

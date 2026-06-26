@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>发三封丢两封，零报错：WorkBuddy QQ邮箱的三个致命坑</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { max-width:680px; margin:0 auto; font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; font-size:16px; line-height:1.8; color:#333; padding:0 16px 40px; }
+.cover { margin:0 -16px 30px; }
+.cover img { width:100%; display:block; }
+.article-title { font-size:24px; font-weight:700; line-height:1.4; margin:24px 0 10px; color:#1a1a1a; }
+.meta { font-size:13px; color:#999; margin-bottom:28px; }
+.quote { background:#f7f8fa; border-left:4px solid #3b82f6; padding:14px 18px; margin:20px 0; font-size:15px; color:#555; border-radius:0 6px 6px 0; }
+h2 { font-size:20px; font-weight:600; margin:32px 0 12px; color:#1a1a1a; padding-top:8px; }
+h3 { font-size:17px; font-weight:600; margin:24px 0 10px; color:#333; }
+p { margin:12px 0; }
+.fig { margin:24px 0; text-align:center; }
+.fig img { max-width:100%; border-radius:8px; border:1px solid #eee; }
+.fig-caption { font-size:12px; color:#999; margin-top:6px; }
+table { width:100%; border-collapse:collapse; margin:16px 0; font-size:14px; }
+th,td { border:1px solid #e5e7eb; padding:10px 14px; text-align:left; }
+th { background:#f9fafb; font-weight:600; font-size:13px; color:#555; }
+tr:nth-child(even) td { background:#fafafa; }
+code { background:#f1f5f9; padding:2px 6px; border-radius:4px; font-size:14px; font-family:"Fira Code","Consolas",monospace; }
+strong { color:#1a1a1a; }
+.tl-dr { background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:16px 20px; margin:20px 0; font-size:14px; }
+.tl-dr strong { color:#1d4ed8; }
+.teaser { background:#fef3c7; border:1px solid #fbbf24; border-radius:8px; padding:14px 20px; margin:20px 0; font-size:14px; color:#78350f; }
+.teaser a { color:#92400e; font-weight:600; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <img src="images-svg/A_professional_WeChat_public_a_2026-06-15T14-39-14.png" alt="断裂的数据链路">
+</div>
+
+<h1 class="article-title">发三封丢两封，零报错：WorkBuddy QQ邮箱的三个致命坑</h1>
+<div class="meta">马斯克 · 2026-06-16</div>
+
+<div class="tl-dr">
+  <strong>TL;DR</strong> WorkBuddy QQ邮箱MCP连接器有约50%概率静默失败——不报错、不超时、不写日志。根因不是Bug，是两阶段异步设计与平台进程回收冲突。如果你的邮件涉及合同发票或客户沟通，现在就去检查。
+</div>
+
+<blockquote class="quote">
+  三天后收件人来问"那封邮件呢？"——连接器状态还是绿色，但邮件从未离开过你的电脑。
+</blockquote>
+
+<h2>先否定一个错误认知</h2>
+
+<p>很多人以为"平台内置连接器最可靠"——WorkBuddy左侧面板有QQ邮箱连接器，点一下扫码，状态变绿，看起来就是官方推荐的方式。</p>
+
+<p><strong>不是。</strong></p>
+
+<p>MCP连接器的设计假设是<strong>短链路、同步调用</strong>——请求→响应→结束。但邮件发送是一个<strong>长链路、异步确认</strong>的过程：组装邮件→用户确认→调用token→实际投递。在"组装"和"投递"之间，连接器可能已经被平台回收了。</p>
+
+<h2>坑 1：两阶段确认的静默失败（最致命）</h2>
+
+<div class="fig">
+  <img src="images-html/01-mcp-pipeline.png" alt="MCP两阶段调用链路">
+  <p class="fig-caption">图：SendMessage两阶段调用——Phase 1返回token，Phase 2连接器已回收→静默失败</p>
+</div>
+
+<table>
+<tr><th>维度</th><th>说明</th></tr>
+<tr><td>现象</td><td>Phase 1成功→用户确认→Phase 2无报错但邮件未发出</td></tr>
+<tr><td>频率</td><td>约50%。随机，不是每次</td></tr>
+<tr><td>根因</td><td>两阶段之间MCP进程被平台回收，token调用时连接已不可用</td></tr>
+<tr><td>致命</td><td><strong>不报错</strong>。没有500/超时/异常提示。悄无声息吞掉邮件</td></tr>
+</table>
+
+<p>我们用脚本循环发了100封测试邮件才复现出这个随机Bug。不是每次都挂，但挂的时候没有任何迹象——这才是最危险的。</p>
+
+<p>想象一下：你给客户发完合同审核意见，状态显示发送成功。三天后客户来催，你才发现邮件根本没离开过你的电脑。而你的连接器状态栏还显示绿色。</p>
+
+<h2>坑 2：附件下载能力缺失（发票场景致命）</h2>
+
+<p><code>GetMessage</code>能拿到邮件正文，<code>ListAttachments</code>能看到文件名和大小——但没有对应的下载API。附件取不出来。</p>
+
+<p>这意味着：你能搜到发票邮件，能看到附件列表，就是没法下载PDF来提取数据。自动化发票处理链条在最关键的一环断掉了。</p>
+
+<h2>坑 3：连接器频繁unavailable（每周至少1-2次）</h2>
+
+<table>
+<tr><th>症状</th><th>频率</th></tr>
+<tr><td><code>GetMe</code>返回 <code>unavailable after recovery</code></td><td>6月10日-12日间至少4次</td></tr>
+<tr><td>连接器状态仍显示绿色但功能不可用</td><td>每次中断邮件工作流</td></tr>
+<tr><td>唯一修复方式</td><td>关窗口→删凭证→重新扫码（每次约5分钟）</td></tr>
+</table>
+
+<p>排查了两天才确认：不是授权过期，是连接器进程被平台回收后，状态显示还是绿色，但实际已经不可用了。<code>GetMe</code>返回<code>unavailable after recovery</code>，唯一的修复方式是重新走一遍OAuth流程。</p>
+
+<h2>不是Bug，是架构假设不匹配</h2>
+
+<p>MCP连接器的两阶段设计本身没问题——它是为短链路同步操作设计的（"请求→响应→结束"）。问题在于<strong>邮件发送是长链路异步操作</strong>。在Phase 1（组装邮件）和Phase 2（实际投递）之间，连接器进程可能已经被平台回收了。</p>
+
+<p>这不是Bug，是<strong>架构选型问题</strong>：把长链路操作放在了短链路工具上。</p>
+
+<div class="teaser">
+  <strong>下篇预告：解决方案已就绪</strong><br>
+  三个坑的解法用了同一套架构原则：不依赖不可控的中间件、核心能力自己做、凭证不与代码共存。<br>
+  <a href="#">👉 点击查看：从MCP到SKILL，零失败邮件方案的完整工程解法</a>
+</div>
+
+</body>
+</html>

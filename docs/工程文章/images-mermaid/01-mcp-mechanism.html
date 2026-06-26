@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<style>
+body { background:#fff; padding:30px; font-family:sans-serif; }
+h2 { text-align:center; color:#333; margin-bottom:20px; }
+</style>
+</head>
+<body>
+<h2>MCP两阶段确认 — 静默失败机制</h2>
+<div class="mermaid">
+sequenceDiagram
+    participant U as 👤 用户
+    participant W as WorkBuddy
+    participant M as MCP连接器
+    participant E as QQ邮箱
+
+    U->>W: 让AI写邮件
+    W->>M: Phase1: SendMessage(内容)
+    M-->>W: ✅ confirmation_token
+    W->>U: 请确认发送
+    Note over U,W: ⚠️ 关键空档期<br/>用户可能离开/等待
+    
+    U->>W: 点击确认
+    W->>M: Phase2: SendMessage(token)
+    Note over M: ❌ 进程已被回收<br/>无报错/无超时/无日志
+    M-->>W: (静默失败)
+    Note over U,E: 邮件从未离开WorkBuddy
+</div>
+
+<h2 style="margin-top:40px">三个方案的执行链路对比</h2>
+<div class="mermaid">
+graph TB
+    subgraph S1["方案一 · 习惯级 ⭐"]
+        A1[组装邮件] -->|立即| A2[点击确认] -->|紧凑| A3[✅ 成功发送]
+    end
+    subgraph S2["方案二 · 热身级 ⭐⭐"]
+        B1[发测试邮件] -->|收到确认| B2[发正式邮件] -->|活跃会话| B3[✅ 成功发送]
+    end
+    subgraph S3["方案三 · 口令级 ⭐⭐⭐"]
+        C1[一次性指令] -->|无需确认| C2[直接投递] -->|无空档| C3[✅ 成功发送]
+    end
+
+    style S1 fill:#f0fdf4,stroke:#10b981
+    style S2 fill:#fef9c3,stroke:#f59e0b
+    style S3 fill:#eff6ff,stroke:#3b82f6
+</div>
+</body>
+</html>

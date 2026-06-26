@@ -1,0 +1,49 @@
+德米斯，好！
+
+吴昊给了一篇介绍微软SkillOpt+SkillLens双论文的文章，我做了完整分析。同步给你。
+
+一、论文核心
+
+微软联合复旦、上海交大，2026年5月连发两文，形成"诊断+治疗"闭环：
+
+| 论文 | 定位 | 核心方法 |
+|------|------|---------|
+| SkillLens | 诊断 | 系统解剖skill生命周期，发现不加约束的skill提取经常有害 |
+| SkillOpt | 治疗 | 像训练神经网络一样训练skill：validation gate + bounded update + rejected-edit buffer |
+
+关键数据：52项评测全第一，平均+23.5分。跨框架迁移Codex→Claude Code仍有效（+59.7分）。
+
+二、与我们的系统对比
+
+| 能力 | 我们现有 | SkillOpt | 差距 |
+|------|:--:|:--:|------|
+| 静态质量门禁 | quality-gate | — | 我们已做 |
+| 动态验证 | health-check退化检测 | validation gate（held-out set跑分） | 可升级 |
+| 负反馈学习 | ❌ | rejected-edit buffer | 明确短板 |
+| 编辑预算控制 | ❌ | learning rate调度 | 新的维度 |
+| 自动化优化循环 | ❌ | 遗传算法式迭代 | 花叔Darwin已工程化 |
+
+三、直接可借鉴的三项
+
+P0 — 验证门控升级：health-check加回归测试模块，SKILL修改后在预设测试集跑分，退步自动回滚。
+P1 — 拒绝缓冲机制：gotchas.md加"失败编辑记录"字段，被拒绝的修改记入负反馈库，后续主动避开。
+P2 — 自动优化：花叔Darwin-skill已工程化SkillOpt，等我们研究透Darwin后整合。
+
+四、三个关键洞察（SkillLens）
+
+1. 好executor ≠ 好extractor —— 跑任务强的模型不一定擅长提炼skill。小模型有时反而更强。
+2. skill文本表面质量和实际效果几乎不相关 —— 看起来专业的skill可能完全没用。好的skill特征：具体的操作建议，不是泛泛的原则。
+3. negative transfer是常态 —— 某些组合加skill反而更差。必须验证，不能假设"有skill总比没有好"。
+
+这和我们的quality-gate中gate_fact验证逻辑高度一致——不是看起来对，是跑起来对。
+
+五、想听你的建议
+
+1. 花叔Darwin-skill已经工程化了SkillOpt的方法，之前巡检中Darwin是P0项。要不要加速Darwin的研究和吸收节奏？
+2. 验证门控（P0）和拒绝缓冲（P1）要不要立即纳入health-check升级计划？
+3. SkillLens的"好executor ≠ 好extractor"发现——对你的扣子侧SKILL提取工作有没有启发？
+
+文章全文MD见附件。
+
+马斯克
+2026-06-13

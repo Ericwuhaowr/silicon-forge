@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>WorkBuddy QQ邮箱连接不稳定？先试这三个简单方案</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { max-width:680px; margin:0 auto; font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; font-size:16px; line-height:1.8; color:#333; padding:0 16px 40px; }
+.article-title { font-size:24px; font-weight:700; line-height:1.4; margin:30px 0 10px; color:#1a1a1a; }
+.meta { font-size:13px; color:#999; margin-bottom:28px; }
+.tl-dr { background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:16px 20px; margin:20px 0; font-size:14px; }
+.tl-dr strong { color:#1d4ed8; }
+h2 { font-size:20px; font-weight:600; margin:32px 0 12px; color:#1a1a1a; padding-top:8px; }
+h3 { font-size:17px; font-weight:600; margin:24px 0 10px; color:#333; }
+p { margin:12px 0; }
+table { width:100%; border-collapse:collapse; margin:16px 0; font-size:14px; }
+th,td { border:1px solid #e5e7eb; padding:10px 14px; text-align:left; }
+th { background:#f9fafb; font-weight:600; font-size:13px; color:#555; }
+td strong { color:#1a1a1a; }
+code { background:#f1f5f9; padding:2px 6px; border-radius:4px; font-size:14px; font-family:"Fira Code","Consolas",monospace; }
+pre { background:#1e293b; color:#e2e8f0; padding:16px 20px; border-radius:8px; overflow-x:auto; font-size:13px; line-height:1.6; margin:16px 0; }
+.tip { background:#f0fdf4; border-left:4px solid #10b981; padding:14px 18px; margin:20px 0; font-size:15px; border-radius:0 6px 6px 0; }
+.tip strong { color:#059669; }
+.warn { background:#fffbeb; border-left:4px solid #f59e0b; padding:14px 18px; margin:20px 0; font-size:15px; border-radius:0 6px 6px 0; }
+.warn strong { color:#b45309; }
+.step { counter-reset:step; margin:24px 0; }
+.step-item { counter-increment:step; padding:16px 20px 16px 60px; position:relative; margin:12px 0; background:#f8fafc; border-radius:10px; border:1px solid #e2e8f0; }
+.step-item::before { content:counter(step); position:absolute; left:16px; top:16px; width:32px; height:32px; background:#3b82f6; color:#fff; border-radius:50%; text-align:center; line-height:32px; font-size:14px; font-weight:600; }
+.step-item h3 { margin-top:0; font-size:16px; }
+.step-item p { font-size:15px; color:#555; }
+.teaser { background:linear-gradient(135deg,#eff6ff,#f0f9ff); border:1px solid #93c5fd; border-radius:10px; padding:20px 24px; margin:30px 0; text-align:center; }
+.teaser h3 { font-size:17px; margin-bottom:8px; color:#1d4ed8; }
+.teaser p { font-size:14px; color:#64748b; margin:6px 0; }
+.footer { margin-top:40px; padding-top:20px; border-top:1px solid #e5e7eb; font-size:13px; color:#999; }
+.footer table { font-size:12px; }
+.footer td { padding:6px 10px; }
+</style>
+</head>
+<body>
+
+<h1 class="article-title">WorkBuddy QQ邮箱连接不稳定？先试这三个简单方案</h1>
+<div class="meta">马斯克 · 2026-06-16</div>
+
+<div class="tl-dr">
+  <strong>TL;DR</strong> WorkBuddy 内置的 QQ 邮箱连接器偶尔会出现"显示已发送但对方没收到的"情况。问题出在连接器的两阶段发送机制上。在你找到更好的替代方案之前，这三个简单的办法能帮你大大降低出问题的概率——从最容易的开始。
+</div>
+
+<h2>先快速判断：你是不是遇到了这个问题？</h2>
+
+<p>如果你用 WorkBuddy 自带的 QQ 邮箱连接器发邮件，偶尔发现"明明点了发送，对方却说没收到"——你并不孤单。这不是个例，而是连接器的底层机制导致的。</p>
+
+<p>简单说：MCP 连接器是为"短链路操作"设计的（发一个请求，马上拿到结果）。但邮件发送是"长链路操作"——组装邮件、等你确认、再去投递，中间间隔可能好几秒甚至几分钟。在这个空档里，连接器进程可能已经被平台回收了。</p>
+
+<p>核心原因一句话：<strong>异步操作碰上了同步工具。不是Bug，是工具没配对上场景。</strong></p>
+
+<p>下面三个方案，按难度从低到高排列。你可以从第一个开始试。</p>
+
+<hr>
+
+<h2>方案一 · 最省心：发完就确认，别等</h2>
+
+<div class="step">
+<div class="step-item">
+  <h3>缩短"组装到确认"的间隔</h3>
+  <p>这套方案零配置，只改自己的工作习惯：</p>
+  <p><strong>做法：</strong>让 AI 帮你组装好邮件内容后，<strong>立即点击确认发送</strong>——不要去看一眼微信、切换一个窗口。确认和组装之间的间隔越短，连接器被回收的概率越低。</p>
+  <p><strong>为什么有效：</strong>连接器回收通常发生在空闲状态。两次操作越紧凑，越不容易触发回收。</p>
+</div>
+</div>
+
+<div class="tip">
+  <strong>难度：⭐（零配置）</strong><br>
+  这是最简单的方案。没有步骤，只是一个习惯养成。如果你的邮件发送频率不高（一天几封），这个方案可能就够了。
+</div>
+
+<hr>
+
+<h2>方案二 · 加一个确认：发重要邮件前"热身"一下</h2>
+
+<div class="step">
+<div class="step-item">
+  <h3>先发一封测试邮件给自己</h3>
+  <p>给客户发合同之前，先给自己发一封短邮件。确认能收到后，再发正式内容。</p>
+  <p><strong>做法：</strong></p>
+  <p>第一步：对 WorkBuddy 说"发一封测试邮件给我自己，主题写test"<br>
+  第二步：打开自己的 QQ 邮箱确认收到了<br>
+  第三步：收到后立即发正式邮件</p>
+  <p><strong>为什么有效：</strong>热身过程实质上重新建立了连接器与平台之间的活跃会话，后续发正式邮件时进程还没被回收。</p>
+</div>
+</div>
+
+<div class="warn">
+  <strong>难度：⭐⭐（加一步确认）</strong><br>
+  这个方案有一个注意事项：给自己发完测试邮件后，尽快发正式邮件。如果又等了十几分钟，热身就白做了。
+</div>
+
+<hr>
+
+<h2>方案三 · 换个发送方式：不用两阶段，一次性搞定</h2>
+
+<div class="step">
+<div class="step-item">
+  <h3>用"对话指令"直接发送</h3>
+  <p>不经过"组装→确认→投递"的三步流程，而是让 AI 一次性完成：</p>
+  <p><strong>做法：</strong>WorkBuddy 支持用对话直接触发邮件发送，中间不用确认。这样绕过了最容易出问题的"组装到投递"这个空档。</p>
+  <p><strong>操作方式（在 WorkBuddy 对话中输入）：</strong></p>
+  <pre>发邮件给 xxx@qq.com，主题"项目进展同步"，正文如下：
+...（你的内容）...
+请直接发送，不需要我确认。</pre>
+  <p><strong>为什么有效：</strong>减少了中间环节。传统流程是"组装→确认→投递"，跳过了确认步骤后，组装和投递之间的间隔大幅缩短。</p>
+</div>
+</div>
+
+<div class="tip">
+  <strong>难度：⭐⭐⭐（改一下说法就行）</strong><br>
+  这个方案适合发送不需要审批确认的常规邮件。如果你习惯先看一眼内容再发，可以保留"先确认再发送"的习惯，但确认后立即点击——回到方案一的思路。
+</div>
+
+<hr>
+
+<h2>三个方案的适用场景</h2>
+
+<table>
+<tr><th>你的情况</th><th>推荐方案</th></tr>
+<tr><td>一天发几封，偶尔出问题</td><td><strong>方案一</strong>（改习惯就够了）</td></tr>
+<tr><td>发重要合同/客户邮件</td><td><strong>方案二</strong>（先热身再发）</td></tr>
+<tr><td>常规邮件、通知类</td><td><strong>方案三</strong>（一次性搞定）</td></tr>
+</table>
+
+<p>这三个方案都是在你现有的 WorkBuddy MCP 连接器基础上做的优化。它们不能 100% 杜绝问题，但能让出问题的概率降到很低。</p>
+
+<p>如果你有更高频、更稳定的需求——比如每天批量处理发票邮件、自动化巡检、定时发送日报——那可能需要一个更彻底的解决方案。</p>
+
+<div class="teaser">
+  <h3>📬 下一篇预告</h3>
+  <p>如果以上三个方案还不能满足你——比如你需要 100% 稳定性、需要下载附件、需要自动化批量处理——下一篇我会分享一套完全不同的思路。</p>
+  <p><strong>关键词：独立脚本、零失败、SMTP直连</strong></p>
+  <p style="font-size:13px;color:#93c5fd;margin-top:12px;">预计下周二发布。关注本号，第一时间收到推送。</p>
+</div>
+
+<div class="footer">
+  <p><strong>用了什么外部资料：</strong></p>
+  <table>
+    <tr><td>QQ邮箱 IMAP/SMTP 服务</td><td><a href="https://service.mail.qq.com/">https://service.mail.qq.com/</a></td></tr>
+  </table>
+  <p style="margin-top:12px;"><strong>用了什么 SKILL：</strong></p>
+  <table>
+    <tr><td>wuhao-writer-吴昊风格工程文章 V2.0</td><td>工程文章写作框架（需求追问/三道门控/反模式阻击/配图风格库）。用于重写文章结构、控制语气节奏、确保反Slop</td></tr>
+    <tr><td>article-illustration-pro V1.0</td><td>三层配图技术栈。本文使用 HTML+CSS 信息图方案（卡片式步骤展示），无AI生图（本文字数控制+无复杂架构）</td></tr>
+  </table>
+</div>
+
+</body>
+</html>

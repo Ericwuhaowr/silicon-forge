@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { width:1200px; height:675px; font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f5f6f8; padding:36px 48px; color:#1e293b; }
+h2 { font-size:22px; font-weight:600; text-align:center; margin-bottom:6px; color:#0f172a; }
+.sub { font-size:13px; text-align:center; color:#64748b; margin-bottom:30px; }
+.layers { display:flex; flex-direction:column; gap:16px; }
+.layer { background:#fff; border-radius:10px; padding:18px 24px; border:1px solid #e2e8f0; display:flex; align-items:center; gap:16px; }
+.layer-badge { width:4px; height:60px; border-radius:2px; flex-shrink:0; }
+.layer-badge.blue { background:#3b82f6; }
+.layer-badge.green { background:#10b981; }
+.layer-badge.amber { background:#f59e0b; }
+.layer-info { width:120px; flex-shrink:0; }
+.layer-info h3 { font-size:15px; font-weight:600; }
+.layer-info .label { font-size:11px; color:#64748b; margin-top:2px; }
+.layer-content { flex:1; display:flex; align-items:center; gap:12px; }
+.problem { background:#fef2f2; border:1px solid #fecaca; border-radius:6px; padding:10px 16px; flex:1; }
+.problem .tag { font-size:10px; color:#dc2626; font-weight:600; text-transform:uppercase; }
+.problem .text { font-size:13px; color:#7f1d1d; margin-top:4px; font-weight:500; }
+.arrow-box { font-size:18px; color:#94a3b8; flex-shrink:0; font-weight:300; }
+.solution { background:#ecfdf5; border:1px solid #a7f3d0; border-radius:6px; padding:10px 16px; flex:1; }
+.solution .tag { font-size:10px; color:#059669; font-weight:600; }
+.solution .text { font-size:13px; color:#064e3b; margin-top:4px; font-weight:500; }
+.principle { background:#fffbeb; border:1px solid #fde68a; border-radius:6px; padding:10px 14px; flex:1.2; }
+.principle .tag { font-size:10px; color:#b45309; font-weight:600; }
+.principle .text { font-size:13px; color:#78350f; margin-top:4px; font-weight:500; }
+</style>
+</head>
+<body>
+<h2>三层问题 × 三层解法</h2>
+<p class="sub">从传输到功能到安全，每一层都有独立解法</p>
+
+<div class="layers">
+  <div class="layer">
+    <div class="layer-badge blue"></div>
+    <div class="layer-info"><h3 style="color:#2563eb;">传输层</h3><span class="label">通信基础设施</span></div>
+    <div class="layer-content">
+      <div class="problem"><span class="tag">问题</span><div class="text">MCP连接器不稳定，50%静默失败</div></div>
+      <div class="arrow-box">→</div>
+      <div class="solution"><span class="tag">解法</span><div class="text">IMAP/SMTP 独立 Node.js 脚本</div></div>
+      <div class="principle"><span class="tag">工程原则</span><div class="text">核心链路不依赖不可控中间件</div></div>
+    </div>
+  </div>
+
+  <div class="layer">
+    <div class="layer-badge green"></div>
+    <div class="layer-info"><h3 style="color:#059669;">功能层</h3><span class="label">业务能力实现</span></div>
+    <div class="layer-content">
+      <div class="problem"><span class="tag">问题</span><div class="text">附件无法下载，发票端到端受阻</div></div>
+      <div class="arrow-box">→</div>
+      <div class="solution"><span class="tag">解法</span><div class="text">mailparser 本地解析 + 直接下载</div></div>
+      <div class="principle"><span class="tag">工程原则</span><div class="text">核心能力自己做，不交给平台</div></div>
+    </div>
+  </div>
+
+  <div class="layer">
+    <div class="layer-badge amber"></div>
+    <div class="layer-info"><h3 style="color:#d97706;">安全层</h3><span class="label">数据保护屏障</span></div>
+    <div class="layer-content">
+      <div class="problem"><span class="tag">问题</span><div class="text">授权码明文存在文件/终端/代码仓库</div></div>
+      <div class="arrow-box">→</div>
+      <div class="solution"><span class="tag">解法</span><div class="text">Windows 系统环境变量存储</div></div>
+      <div class="principle"><span class="tag">工程原则</span><div class="text">凭证不与代码、文档、日志共存</div></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

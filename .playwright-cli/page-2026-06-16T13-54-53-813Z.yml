@@ -1,0 +1,54 @@
+- generic [active] [ref=e1]:
+  - heading "MCP 连接器 SendMessage 的底层机制" [level=2] [ref=e2]
+  - paragraph [ref=e3]: 为什么偶尔"点了发送，对方没收到"？
+  - generic [ref=e4]:
+    - generic [ref=e5]:
+      - heading "1. 组装邮件" [level=3] [ref=e6]
+      - paragraph [ref=e7]:
+        - text: AI 调用 SendMessage API
+        - text: 组装收件人、主题、正文
+        - text: 返回一个临时 token
+      - generic [ref=e8]: Phase 1 完成
+    - generic [ref=e9]: →
+    - generic [ref=e10]:
+      - heading "2. 等待确认" [level=3] [ref=e11]
+      - paragraph [ref=e12]:
+        - text: 弹窗显示邮件预览
+        - text: 等你点击"确认发送"
+        - text: 间隔：几秒到几分钟
+      - generic [ref=e13]: 用户操作中
+    - generic [ref=e14]: →
+    - generic [ref=e15]:
+      - heading "3. ⚠ 空档期风险" [level=3] [ref=e16]
+      - paragraph [ref=e17]:
+        - text: 你去看微信/切换窗口
+        - text: 连接器进程可能被回收
+        - text: 此时平台状态仍显示绿色
+      - generic [ref=e18]: 脆弱窗口
+    - generic [ref=e19]: →
+    - generic [ref=e20]:
+      - heading "4. 静默失败" [level=3] [ref=e21]
+      - paragraph [ref=e22]:
+        - text: Phase 2 携带过期 token
+        - text: 无法完成投递
+        - text: 无报错、无日志、无提示
+      - generic [ref=e23]: 零反馈
+  - generic [ref=e24]:
+    - generic [ref=e25]:
+      - heading "问题根因" [level=4] [ref=e26]
+      - paragraph [ref=e27]:
+        - text: MCP 为"短链路同步"设计
+        - text: 邮件发送是"长链路异步"
+        - text: → 工具没配对上场景
+    - generic [ref=e28]:
+      - heading "不是 Bug" [level=4] [ref=e29]
+      - paragraph [ref=e30]:
+        - text: 不是代码缺陷
+        - text: 不是操作失误
+        - text: 是底层机制限制
+    - generic [ref=e31]:
+      - heading "解决思路" [level=4] [ref=e32]
+      - paragraph [ref=e33]:
+        - text: 两个方向：
+        - text: ① 缩短空档 → 立即确认
+        - text: ② 跳过空档 → 一次性指令

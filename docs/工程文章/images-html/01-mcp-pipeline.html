@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { width: 1200px; height: 675px; font-family: "Microsoft YaHei","PingFang SC",sans-serif; background: #f5f6f8; display: flex; flex-direction: column; padding: 36px 48px; }
+h2 { font-size: 20px; font-weight: 700; text-align: center; color: #1a1a2e; margin-bottom: 4px; }
+.sub { font-size: 12px; text-align: center; color: #64748b; margin-bottom: 22px; }
+
+.pipeline { display: flex; align-items: flex-start; gap: 0; margin-bottom: 18px; }
+.card { flex: 1; background: #fff; border-radius: 10px; padding: 16px 12px; border: 1px solid #e2e8f0; position: relative; }
+.card h3 { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+.card p { font-size: 11px; color: #475569; line-height: 1.6; }
+.card .tag { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 10px; margin-top: 6px; font-weight: 600; }
+
+.card.phase1 { border-left: 3px solid #3b82f6; } .card.phase1 h3 { color: #1d4ed8; } .card.phase1 .tag { background: #eff6ff; color: #1d4ed8; }
+.card.phase2 { border-left: 3px solid #f59e0b; } .card.phase2 h3 { color: #b45309; } .card.phase2 .tag { background: #fffbeb; color: #b45309; }
+.card.gap { border-left: 3px solid #ef4444; background: #fef2f2; } .card.gap h3 { color: #dc2626; } .card.gap .tag { background: #fef2f2; color: #dc2626; }
+.card.fail { border-left: 3px solid #6b7280; background: #f9fafb; } .card.fail h3 { color: #374151; } .card.fail .tag { background: #f3f4f6; color: #6b7280; }
+
+.arrow { flex: 0 0 44px; display: flex; align-items: center; justify-content: center; font-size: 22px; color: #cbd5e1; padding-top: 16px; }
+
+.explain { background: #fff; border-radius: 10px; padding: 18px 24px; display: flex; gap: 20px; }
+.explain-col { flex: 1; }
+.explain-col h4 { font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+.explain-col p { font-size: 12px; color: #475569; line-height: 1.8; }
+.explain-col.red h4 { color: #dc2626; }
+.explain-col.green h4 { color: #059669; }
+.explain-col.blue h4 { color: #1d4ed8; }
+</style>
+</head>
+<body>
+
+<h2>MCP 连接器 SendMessage 的底层机制</h2>
+<p class="sub">为什么偶尔"点了发送，对方没收到"？</p>
+
+<div class="pipeline">
+  <div class="card phase1">
+    <h3>1. 组装邮件</h3>
+    <p>AI 调用 SendMessage API<br>组装收件人、主题、正文<br>返回一个临时 token</p>
+    <span class="tag">Phase 1 完成</span>
+  </div>
+  <div class="arrow">→</div>
+  <div class="card phase2">
+    <h3>2. 等待确认</h3>
+    <p>弹窗显示邮件预览<br>等你点击"确认发送"<br>间隔：几秒到几分钟</p>
+    <span class="tag">用户操作中</span>
+  </div>
+  <div class="arrow">→</div>
+  <div class="card gap">
+    <h3>3. ⚠ 空档期风险</h3>
+    <p>你去看微信/切换窗口<br>连接器进程可能被回收<br>此时平台状态仍显示绿色</p>
+    <span class="tag">脆弱窗口</span>
+  </div>
+  <div class="arrow">→</div>
+  <div class="card fail">
+    <h3>4. 静默失败</h3>
+    <p>Phase 2 携带过期 token<br>无法完成投递<br>无报错、无日志、无提示</p>
+    <span class="tag">零反馈</span>
+  </div>
+</div>
+
+<div class="explain">
+  <div class="explain-col red">
+    <h4>问题根因</h4>
+    <p>MCP 为"短链路同步"设计<br>邮件发送是"长链路异步"<br>→ 工具没配对上场景</p>
+  </div>
+  <div class="explain-col green">
+    <h4>机制特性</h4>
+    <p>不是代码缺陷<br>不是操作失误<br>是底层机制限制</p>
+  </div>
+  <div class="explain-col blue">
+    <h4>解决思路</h4>
+    <p>两个方向：<br>① 缩短空档 → 立即确认<br>② 跳过空档 → 一次性指令</p>
+  </div>
+</div>
+
+</body>
+</html>

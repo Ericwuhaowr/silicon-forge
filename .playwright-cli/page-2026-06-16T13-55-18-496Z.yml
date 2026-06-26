@@ -1,0 +1,33 @@
+- generic [active] [ref=e1]:
+  - heading "5 秒自测：你属于哪种场景？" [level=2] [ref=e2]
+  - paragraph [ref=e3]: 对照你的使用习惯，找到最适合的方案
+  - generic [ref=e4]:
+    - heading "你用 QQ 邮箱在 WorkBuddy 上主要做什么？" [level=4] [ref=e6]
+    - generic [ref=e7]: ▼
+    - generic [ref=e8]:
+      - generic [ref=e9]:
+        - heading "每天手动发几封" [level=4] [ref=e10]
+        - generic [ref=e11]: ✅ 不用改
+        - generic [ref=e12]:
+          - text: MCP 连接器完全够用
+          - text: 偶尔看看邮件正文
+        - generic [ref=e13]: 继续用 MCP
+      - generic [ref=e14]:
+        - heading "有定时发邮件需求" [level=4] [ref=e15]
+        - generic [ref=e16]: ⚠️ 用三个技巧
+        - generic [ref=e17]:
+          - text: 发完立即确认
+          - text: 重要邮件前热身
+          - text: 用一次性指令
+        - generic [ref=e18]: 上篇方案就够
+      - generic [ref=e19]:
+        - heading "批量通知 / 自动化" [level=4] [ref=e20]
+        - generic [ref=e21]: ❌ 必须升级
+        - generic [ref=e22]:
+          - text: 需要下载附件
+          - text: 高可靠性场景
+          - text: 商业关键用途
+        - generic [ref=e23]: 等下篇发布
+  - generic [ref=e24]:
+    - strong [ref=e25]: 记住：
+    - text: MCP 的价值是"快速接入、零代码上手"→ 轻度场景最佳选择。核心场景需要更可靠的方案。

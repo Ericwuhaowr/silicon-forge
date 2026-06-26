@@ -1,0 +1,49 @@
+- generic [active] [ref=e1]:
+  - heading "三层问题 × 三层解法" [level=2] [ref=e2]
+  - paragraph [ref=e3]: 从传输到功能到安全，每一层都有独立解法
+  - generic [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e7]:
+        - heading "传输层" [level=3] [ref=e8]
+        - text: 通信基础设施
+      - generic [ref=e9]:
+        - generic [ref=e10]:
+          - text: 问题
+          - generic [ref=e11]: MCP连接器不稳定，50%静默失败
+        - generic [ref=e12]: →
+        - generic [ref=e13]:
+          - text: 解法
+          - generic [ref=e14]: IMAP/SMTP 独立 Node.js 脚本
+        - generic [ref=e15]:
+          - text: 工程原则
+          - generic [ref=e16]: 核心链路不依赖不可控中间件
+    - generic [ref=e17]:
+      - generic [ref=e19]:
+        - heading "功能层" [level=3] [ref=e20]
+        - text: 业务能力实现
+      - generic [ref=e21]:
+        - generic [ref=e22]:
+          - text: 问题
+          - generic [ref=e23]: 附件无法下载，发票端到端受阻
+        - generic [ref=e24]: →
+        - generic [ref=e25]:
+          - text: 解法
+          - generic [ref=e26]: mailparser 本地解析 + 直接下载
+        - generic [ref=e27]:
+          - text: 工程原则
+          - generic [ref=e28]: 核心能力自己做，不交给平台
+    - generic [ref=e29]:
+      - generic [ref=e31]:
+        - heading "安全层" [level=3] [ref=e32]
+        - text: 数据保护屏障
+      - generic [ref=e33]:
+        - generic [ref=e34]:
+          - text: 问题
+          - generic [ref=e35]: 授权码明文存在文件/终端/代码仓库
+        - generic [ref=e36]: →
+        - generic [ref=e37]:
+          - text: 解法
+          - generic [ref=e38]: Windows 系统环境变量存储
+        - generic [ref=e39]:
+          - text: 工程原则
+          - generic [ref=e40]: 凭证不与代码、文档、日志共存

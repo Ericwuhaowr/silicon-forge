@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { width:1200px; height:675px; font-family:"Microsoft YaHei","PingFang SC",sans-serif; background:#f5f6f8; padding:36px 48px; color:#1e293b; }
+h2 { font-size:22px; font-weight:600; text-align:center; margin-bottom:6px; color:#0f172a; }
+.sub { font-size:13px; text-align:center; color:#64748b; margin-bottom:28px; }
+.compare { display:flex; gap:24px; }
+.col { flex:1; background:#fff; border-radius:12px; padding:24px; border:1px solid #e2e8f0; }
+.col h3 { font-size:15px; font-weight:600; text-align:center; padding-bottom:14px; margin-bottom:16px; border-bottom:1px solid #f1f5f9; }
+.col.left h3 { color:#b45309; } .col.left { border-top:4px solid #ea580c; }
+.col.right h3 { color:#0f766e; } .col.right { border-top:4px solid #0d9488; }
+.row { display:flex; align-items:center; padding:10px 0; border-bottom:1px solid #f8fafc; }
+.row .label { width:130px; font-size:12px; color:#64748b; flex-shrink:0; }
+.row .value { font-size:13px; font-weight:500; flex:1; }
+.row .icon { width:20px; text-align:center; font-size:13px; flex-shrink:0; }
+.left .value { color:#b45309; } .right .value { color:#0f766e; }
+.verdict { margin-top:14px; padding:12px; border-radius:8px; text-align:center; font-weight:600; font-size:14px; }
+.left .verdict { background:#fef2f2; color:#dc2626; }
+.right .verdict { background:#ecfdf5; color:#059669; }
+.bridge { width:80px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; }
+.bridge-item { text-align:center; font-size:11px; color:#94a3b8; background:#f8fafc; padding:6px 10px; border-radius:6px; border:1px solid #e2e8f0; }
+</style>
+</head>
+<body>
+<h2>MCP 连接器 vs qq-email SKILL</h2>
+<p class="sub">同样的邮件发送任务，两种完全不同的架构选择</p>
+
+<div class="compare">
+  <div class="col left">
+    <h3>MCP 连接器（旧方案）</h3>
+    <div class="row"><span class="label">执行方式</span><span class="value">两阶段异步 SendMessage(token)</span></div>
+    <div class="row"><span class="label">进程管理</span><span class="value">平台托管，生命周期不可控</span></div>
+    <div class="row"><span class="label">可靠性</span><span class="value">50% 静默失败，零报错</span></div>
+    <div class="row"><span class="label">附件下载</span><span class="value">无下载 API</span></div>
+    <div class="row"><span class="label">维护成本</span><span class="value">平台维护但不可控</span></div>
+    <div class="row"><span class="label">状态显示</span><span class="value">绿色 ≠ 可用</span></div>
+    <div class="verdict">结论：不适合长链路异步任务</div>
+  </div>
+
+  <div class="bridge">
+    <div class="bridge-item">异步 → 同步</div>
+    <div class="bridge-item">托管 → 独立</div>
+    <div class="bridge-item">不可控→可控</div>
+  </div>
+
+  <div class="col right">
+    <h3>qq-email SKILL（新方案）</h3>
+    <div class="row"><span class="label">执行方式</span><span class="value">一次性 SMTP 直连</span></div>
+    <div class="row"><span class="label">进程管理</span><span class="value">独立 Node.js 进程</span></div>
+    <div class="row"><span class="label">可靠性</span><span class="value">0% 失败，100封测试全通</span></div>
+    <div class="row"><span class="label">附件下载</span><span class="value">get-attachments.js 直接下载</span></div>
+    <div class="row"><span class="label">维护成本</span><span class="value">自己维护完全可控</span></div>
+    <div class="row"><span class="label">状态显示</span><span class="value">独立进程自管理</span></div>
+    <div class="verdict">结论：稳定、可控、零失败</div>
+  </div>
+</div>
+</body>
+</html>

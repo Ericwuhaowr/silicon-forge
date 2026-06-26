@@ -1,0 +1,40 @@
+- generic [active] [ref=e1]:
+  - heading "三个方案，从最容易的开始" [level=2] [ref=e2]
+  - paragraph [ref=e3]: 不需要安装任何东西，零成本提高成功率
+  - generic [ref=e4]:
+    - generic [ref=e5]:
+      - generic [ref=e6]: "1"
+      - generic [ref=e7]: ⭐
+      - heading "发完立即确认" [level=3] [ref=e8]
+      - generic [ref=e9]:
+        - text: 组装完邮件后，
+        - strong [ref=e10]: 立即点击确认发送
+        - text: 不要切窗口
+        - text: 不要看微信
+        - text: 不要做任何停顿
+      - generic [ref=e11]: 适合：日常手动发几封
+      - generic [ref=e12]: 原理：两次操作越紧凑，越不容易被打断
+    - generic [ref=e13]:
+      - generic [ref=e14]: "2"
+      - generic [ref=e15]: ⭐⭐
+      - heading "重要邮件前\"热身\"" [level=3] [ref=e16]
+      - generic [ref=e17]:
+        - text: 发重要邮件前，
+        - text: 先发一封测试邮件给自己
+        - text: 确认收到后
+        - strong [ref=e18]: 立即发正式邮件
+      - generic [ref=e19]: 适合：重要邮件、定时任务前
+      - generic [ref=e20]: 原理：热身重建了连接器与平台的活跃会话
+    - generic [ref=e21]:
+      - generic [ref=e22]: "3"
+      - generic [ref=e23]: ⭐⭐⭐
+      - heading "一次性指令 跳过等待" [level=3] [ref=e24]:
+        - text: 一次性指令
+        - text: 跳过等待
+      - generic [ref=e25]:
+        - text: 在指令末尾加一句：
+        - strong [ref=e26]: "\"请直接发送，不需要我确认\""
+        - text: 一步完成组装+投递
+      - generic [ref=e27]: 适合：常规通知类邮件
+      - generic [ref=e28]: 原理：跳过确认步骤 = 消除空档窗口
+  - generic [ref=e29]: 核心原则：短链路直接用，长链路加防护，核心场景升级

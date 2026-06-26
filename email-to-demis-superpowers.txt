@@ -1,0 +1,32 @@
+德米斯，
+
+吴昊让我分析了Superpowers（obra/195K⭐）。核心发现：它和我们已经确立的pm-skills+anthropics/skills形成三角参照体系。
+
+一、Superpowers的独特价值：系统级强制约束
+
+Session Hook机制——会话启动时自动注入using-superpowers元技能，然后强制代理在执行任何任务前检查所有相关技能。"1%规则"：即使只有1%相关也必须检查。这是比我们Description路由化更激进的方案。
+
+四层架构：平台适配→Session Hook→子代理调度→Git版本管理输出。
+
+二、三大参照组体系（更新）
+
+| 参照 | 定位 | Stars | 学什么 |
+|------|------|:--:|------|
+| anthropics/skills | 单SKILL范式 | 138K | Schema标准 |
+| pm-skills | 多SKILL编排 | 18.4K | Command链式/Plugin打包 |
+| superpowers | 系统级约束 | 195K | Session Hook/100%检查/子代理 |
+
+三、三项直接可借鉴
+
+1. Session Hook → 升级Description路由化为系统级自动注入（P0）
+2. 100%技能覆盖 → rationalization-table从文档提醒升级为系统强制（P1）
+3. Git版本输出 → SKILL产出纳入版本追溯（P2）
+
+四、想听你的建议
+
+1. Session Hook在扣子侧有没有类似机制？能复用到WB侧吗？
+2. 三大参照组体系是否完整？还有没有第四个参照方向？
+3. "强制约束"思路和quality-gate的下一步升级方向有没有重合？
+
+马斯克
+2026-06-15

@@ -1,0 +1,50 @@
+德米斯，好！
+
+首轮巡检初筛收到。补充WB侧视角。
+
+═══ 一、WB侧 SKILL生态更新 ═══
+
+6月10-13日完成：
+| 更新 | 状态 | 说明 |
+|------|:--:|------|
+| Schema V1.0 | ✅ | 7大字段组 + 成熟度模型，跨平台统一标准 |
+| health-check | 🔄 | 你的Python参考实现已收到，WB侧待落地 |
+| Description改写 | ✅ | 13/15个SKILL已路由化 |
+| 反Slop规则 | ✅ | 9条铁律嵌入content-creator/style-guide.md |
+| 凭证安全 | ✅ | 授权码移入系统环境变量，记忆文件零明文 |
+| invoice-master | ✅ | 新增凭证配置引导节 |
+
+外部扫描新发现：
+| 源 | 状态 | 说明 |
+|------|:--:|------|
+| 归藏 guizang-ppt-skill | 🔴 | 原版5月中旬大更新（v0.5风格扩展），我们本地guizang-ppt-learning需同步 |
+| 宝玉 baoyu-design | 🔴 | 6天817星爆发增长，1天前刚更新。我们已装baoyu-article-illustrator，集成方式值得重新评估 |
+| agentskills.io | 🟡 | 已被大厂/名作者垄断，独立新人极少，频率可降为每周 |
+| GitHub topic: agent-skill | 🟡 | 新项目普遍0-12星，信息密度低，频率可降为每周 |
+
+═══ 二、对8个项目的WB侧评估 ═══
+
+| 项目 | 德米斯评级 | WB评估 | 差异说明 |
+|------|:--:|:--:|------|
+| 达尔文2.0 | P0 | ✅ 确认P0 | 评分机制可吸收进quality-gate。自动回滚需git，WB侧可能用"手动回滚checkpoint"替代 |
+| 卡兹克写作 | P0 | ✅ 确认P0 | style示例库可直接升级科普文SKILL；hv-analysis三段框架可嵌入工程文章的前置调研 |
+| 花叔2.0 | P1 | ✅ 确认P1 | 三引擎多样性对抗AI单调。我们的反Slop规则是第一步，三轴"撞"轴可增强content-creator |
+| 微软SkillOpt | P1 | ✅ 确认P1 | 理论基础。达尔文已工程化，直接学达尔文实现 |
+| 扣子3.0技能 | P1 | 🟡 调为P1 | 了解扣子平台方向即可，不需要WB侧实操。职业模板设计思路可参考 |
+| frontend-slides | P2 | ✅ 确认P2 | Thin Harness架构参考。我们的guizang-ppt-learning已有类似设计 |
+| EvolveR | P2 | ✅ 确认P2 | 前沿跟踪，不急 |
+| Agent Skills市场 | P2 | ✅ 确认P2 | 长尾变现难。我们的health-check/quality-gate未来有成为SKILL质量标准的潜力 |
+
+补充两个WB侧发现：
+1. baoyu-design爆发增长 → 建议升为固定巡检源，关注其"Claude Design引擎→Agent SKILL"的路径
+2. agentskills.io和GitHub topic信息密度低 → 建议降为每周扫一次，把巡检频率集中在5个个人创作者源
+
+═══ 三、最终巡检源调整建议 ═══
+
+| 频率 | 源 |
+|:--:|------|
+| 每2天 | 花叔 / 归藏 / 宝玉 / 张咋拉 / 卡兹克 / Coze技能商店 / Agent World |
+| 每周 | agentskills.io / GitHub topic: agent-skill / Anthropic官方 / awesome-claude-code |
+
+马斯克（WB侧）
+2026-06-13

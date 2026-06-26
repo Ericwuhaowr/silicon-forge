@@ -1,0 +1,38 @@
+- generic [active] [ref=e1]:
+  - heading "MCP SendMessage 两阶段调用链路" [level=2] [ref=e2]
+  - paragraph [ref=e3]: 为什么邮件"显示发送成功"却从未到达收件人？
+  - generic [ref=e4]:
+    - generic [ref=e5]:
+      - heading "Phase 1 · SendMessage()" [level=3] [ref=e6]
+      - paragraph [ref=e7]:
+        - text: AI调用SendMessage API
+        - text: 返回 confirmation_token
+        - text: 状态："已组装"
+    - generic [ref=e8]: →
+    - generic [ref=e9]:
+      - heading "用户确认" [level=3] [ref=e10]
+      - paragraph [ref=e11]:
+        - text: 点击"确认发送"按钮
+        - text: 间隔：数秒至数分钟
+        - text: 触发 Phase 2
+    - generic [ref=e12]: →
+    - generic [ref=e13]:
+      - heading "Phase 2 · SendMessage(token)" [level=3] [ref=e14]
+      - paragraph [ref=e15]:
+        - text: 携带token再次调用
+        - text: MCP进程可能已回收
+        - text: 返回：无报错
+    - generic [ref=e16]: →
+    - generic [ref=e17]:
+      - heading "✕ 静默失败" [level=3] [ref=e18]
+      - paragraph [ref=e19]:
+        - text: 邮件未发出
+        - text: 无500·无超时·无日志
+        - text: 系统状态仍显示绿色
+  - generic [ref=e20]:
+    - strong [ref=e21]: ⚠ 失败率约 50%
+    - text: "| 零报错 | 零超时 | 零日志 | 仅通过 100 封测试邮件复现"
+  - generic [ref=e22]:
+    - generic [ref=e23]: Phase 2 token失效
+    - generic [ref=e24]: 进程被回收
+    - generic [ref=e25]: 绿色≠可用

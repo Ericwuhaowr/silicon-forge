@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+<title>从MCP到SKILL：零失败QQ邮箱方案的完整工程解法</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { max-width:680px; margin:0 auto; font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; font-size:16px; line-height:1.8; color:#333; padding:0 16px 40px; }
+.cover { margin:0 -16px 30px; }
+.cover img { width:100%; display:block; }
+.article-title { font-size:24px; font-weight:700; line-height:1.4; margin:24px 0 10px; color:#1a1a1a; }
+.meta { font-size:13px; color:#999; margin-bottom:28px; }
+.ref { font-size:13px; color:#3b82f6; margin-bottom:20px; font-style:italic; }
+.quote { background:#f7f8fa; border-left:4px solid #3b82f6; padding:14px 18px; margin:20px 0; font-size:15px; color:#555; border-radius:0 6px 6px 0; }
+h2 { font-size:20px; font-weight:600; margin:32px 0 12px; color:#1a1a1a; padding-top:8px; }
+h3 { font-size:17px; font-weight:600; margin:24px 0 10px; color:#333; }
+p { margin:12px 0; }
+.fig { margin:24px 0; text-align:center; }
+.fig img { max-width:100%; border-radius:8px; border:1px solid #eee; }
+.fig-caption { font-size:12px; color:#999; margin-top:6px; }
+table { width:100%; border-collapse:collapse; margin:16px 0; font-size:14px; }
+th,td { border:1px solid #e5e7eb; padding:10px 14px; text-align:left; }
+th { background:#f9fafb; font-weight:600; font-size:13px; color:#555; }
+tr:nth-child(even) td { background:#fafafa; }
+code { background:#f1f5f9; padding:2px 6px; border-radius:4px; font-size:14px; font-family:"Fira Code","Consolas",monospace; }
+pre { background:#1e293b; color:#e2e8f0; padding:16px 20px; border-radius:8px; overflow-x:auto; font-size:13px; line-height:1.6; margin:16px 0; }
+strong { color:#1a1a1a; }
+.tl-dr { background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:16px 20px; margin:20px 0; font-size:14px; }
+.tl-dr strong { color:#1d4ed8; }
+.checklist { background:#fef3c7; border:1px solid #fbbf24; border-radius:8px; padding:18px 22px; margin:24px 0; }
+.checklist h3 { margin:0 0 10px; color:#92400e; }
+.checklist ol { margin:0; padding-left:20px; color:#78350f; font-size:15px; }
+.checklist li { margin:6px 0; }
+.footer { margin-top:40px; padding-top:20px; border-top:1px solid #e5e7eb; font-size:13px; color:#999; }
+.footer table { font-size:12px; }
+.footer td { padding:6px 10px; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <img src="images-html/02-mcp-vs-skill.png" alt="MCP vs SKILL对比">
+</div>
+
+<h1 class="article-title">从MCP到SKILL：零失败QQ邮箱方案的完整工程解法</h1>
+<div class="meta">马斯克 · 2026-06-16</div>
+<div class="ref">（接上篇：<a href="#">发三封丢两封：WorkBuddy QQ邮箱的三个致命坑</a>）</div>
+
+<div class="tl-dr">
+  <strong>TL;DR</strong> 上篇拆解了MCP连接器的三个致命坑。这篇给解法——用qq-email SKILL（独立Node.js脚本+SMTP直连）替代MCP连接器，失败率归零。同时用系统环境变量堵住授权码泄露的口子。工程上最值钱的不是"修好了"，而是"修完以后再也不会坏"。
+</div>
+
+<h2>为什么不"修好MCP"</h2>
+
+<p>MCP的SendMessage两阶段设计本身没问题——问题是<strong>发邮件是长链路异步操作，不适合用MCP连接器承载</strong>。等平台修复？可以提Bug，但不能等。你的邮件不能等。</p>
+
+<p><strong>结论：放弃MCP连接器，用SKILL走独立脚本。</strong></p>
+
+<h2>qq-email SKILL：独立进程，零失败</h2>
+
+<p>WorkBuddy → 技能市场 → 搜索「qq-email」→ 安装。四个核心脚本：</p>
+
+<pre>send.js          — SMTP直连发信（一次性同步，无两阶段）
+receive.js       — IMAP收信
+get-body.js      — 获取邮件正文
+get-attachments.js — 下载附件到本地</pre>
+
+<div class="fig">
+  <img src="images-html/02-mcp-vs-skill.png" alt="MCP vs SKILL对比">
+  <p class="fig-caption">图：MCP连接器 vs qq-email SKILL — 核心差异在架构层</p>
+</div>
+
+<table>
+<tr><th>对比</th><th>MCP连接器</th><th>qq-email SKILL</th></tr>
+<tr><td>发送方式</td><td>两阶段异步 SendMessage(token)</td><td>一次性同步 SMTP直连</td></tr>
+<tr><td>进程管理</td><td>平台托管，生命周期不可控</td><td>独立Node.js进程，不受平台影响</td></tr>
+<tr><td>失败率</td><td>约50%，零报错</td><td>零失败（100封测试全通）</td></tr>
+<tr><td>附件下载</td><td>❌ 无下载API</td><td>✅ 直接下载到本地</td></tr>
+<tr><td>可控性</td><td>平台维护但不可控</td><td>自己维护完全可控</td></tr>
+</table>
+
+<p><strong>核心差异</strong>：SKILL每次调用都是独立的Node.js进程——没有中间状态、没有token过期、没有静默失败。一个单进程搞定全部。</p>
+
+<h2>安全加固：授权码不能出现在任何文件里</h2>
+
+<p>SKILL跑通了，但还有个隐患：脚本每次执行前要配置授权码，容易写进终端历史或配置文件里。</p>
+
+<table>
+<tr><th>存储方式</th><th>风险</th></tr>
+<tr><td>命令行 <code>export</code></td><td>终端历史明文记录</td></tr>
+<tr><td>写进MEMORY.md/SKILL.md</td><td>每次会话作为上下文发送至模型API链路</td></tr>
+<tr><td>提交到代码仓库</td><td>任何人拿到目录即可登录邮箱</td></tr>
+</table>
+
+<p>这不是WorkBuddy特有的问题。任何AI助手平台，只要把敏感信息写入会被模型读取的上下文文件，都会经过模型API链路。</p>
+
+<p><strong>正确的做法：Windows系统环境变量。</strong></p>
+
+<pre>Win+R → sysdm.cpl → 高级 → 环境变量 → 用户变量 → 新建
+  变量名: QQ_EMAIL_AUTH_CODE
+  变量值: [授权码]</pre>
+
+<table>
+<tr><th>维度</th><th>之前（文件明文）</th><th>之后（系统环境变量）</th></tr>
+<tr><td>对AI可见性</td><td>可能注入上下文</td><td>❌ 不可见</td></tr>
+<tr><td>跨会话</td><td>需重新export</td><td>永久生效</td></tr>
+</table>
+
+<p>配好后，调用从需要手动export简化为一行命令。零明文，零额外步骤。</p>
+
+<h2>工程总结：三层问题，三层解法</h2>
+
+<div class="fig">
+  <img src="images-html/03-three-layer-framework.png" alt="三层工程总结">
+  <p class="fig-caption">图：从传输到功能到安全，每一层都有独立解法和工程原则</p>
+</div>
+
+<table>
+<tr><th>层</th><th>问题</th><th>解法</th><th>工程原则</th></tr>
+<tr><td>传输层</td><td>MCP连接器不稳定</td><td>IMAP/SMTP独立脚本</td><td>核心链路不依赖不可控中间件</td></tr>
+<tr><td>功能层</td><td>附件无法下载</td><td>mailparser本地解析</td><td>核心能力自己做，不交给平台</td></tr>
+<tr><td>安全层</td><td>凭证明文泄露</td><td>系统环境变量</td><td>凭证不与代码/文档共存</td></tr>
+</table>
+
+<table>
+<tr><th>场景</th><th>推荐</th></tr>
+<tr><td>偶尔手动收发几封</td><td>MCP连接器够用</td></tr>
+<tr><td>自动化巡检/批量发票/定时任务</td><td><strong>qq-email SKILL</strong></td></tr>
+<tr><td>需要下载附件</td><td><strong>必须用SKILL</strong></td></tr>
+<tr><td>多邮箱/多环境</td><td>环境变量+<code>.env</code>文件（加<code>.gitignore</code>）</td></tr>
+</table>
+
+<p>这篇文章的核心价值不在"修好了邮路"，而在<strong>"修好邮路的同时，意识到并堵住了凭证泄露的口子"</strong>。如果你只在技术层面解决了问题，却把授权码留在了上下文文件里——那不叫修好，叫换了一种方式埋雷。</p>
+
+<p>工程上最值钱的不是"修好了"，而是<strong>"修完以后再也不会坏"</strong>。</p>
+
+<div class="checklist">
+  <h3>现在就去检查三件事</h3>
+  <ol>
+    <li>发3封以上测试邮件，确认是不是都成功送达——不要只看状态栏的绿色</li>
+    <li>看看你的授权码是不是明文存在MEMORY.md或其他配置文件里——如果是，马上移到系统环境变量</li>
+    <li>打开技能市场搜「qq-email」——整套方案，装上就能用</li>
+  </ol>
+</div>
+
+<div class="footer">
+  <p><strong>用了什么外部资料：</strong></p>
+  <table>
+    <tr><td>qq-email SKILL（WorkBuddy技能市场）</td><td>本地路径 <code>~/.workbuddy/skills/qq-email/</code></td></tr>
+    <tr><td>QQ邮箱 IMAP/SMTP 服务</td><td><a href="https://service.mail.qq.com/">https://service.mail.qq.com/</a></td></tr>
+  </table>
+  <p style="margin-top:12px;"><strong>用了什么SKILL：</strong></p>
+  <table>
+    <tr><td>wuhao-writer-吴昊风格工程文章 V2.0</td><td>工程文章写作框架</td></tr>
+    <tr><td>article-illustration-pro V1.0</td><td>三层技术栈配图</td></tr>
+  </table>
+</div>
+
+</body>
+</html>

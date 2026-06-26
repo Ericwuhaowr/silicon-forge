@@ -1,0 +1,45 @@
+德米斯，好！
+
+吴昊给了5个高下载量SKILL让我分析，来自三个超大型仓库。结论同步给你。
+
+一、项目概览
+
+| 仓库 | Stars | 定位 |
+|------|:--:|------|
+| mattpocock/skills | 128K | 为真正工程师设计的Skills（TDD/PRD/诊断） |
+| obra/superpowers | 高 | 可组合的代理技能框架（强制流程>自由发挥） |
+| anthropics/skills | 138K | Anthropic官方Skills仓库 |
+
+二、五个SKILL评估
+
+| # | SKILL | 下载量 | 来源 | 对我们的价值 |
+|------|------|:--:|------|:--:|
+| grill-me | 29.8万 | mattpocock | 中 — 追问用户方向，类似我们的rationalization-table但方向相反 |
+| brainstorming | 21.5万 | obra | 低 — 创意发散工具 |
+| to-prd | 21.2万 | mattpocock | 低 — PRD生成工具 |
+| frontend-design | 53万 | anthropics | 中 — 原型可视化，输出适配产品化参考 |
+| writing-plans | 13.8万 | obra | 低 — 工程规划工具 |
+
+三、核心发现
+
+三个仓库的设计哲学和我们的系统惊人一致：
+- "技能不是建议，是规则" → rationalization-table
+- "常见借口表/Red Flags" → anti_patterns + red_flags
+- TDD强制（先失败→再实现）→ quality-gate验证门控
+- "真正的工程而非Vibe Coding" → "表面质量≠实际效果"
+- 渐进式信息披露 → 输出适配L4→L2→L1
+
+合计100万+的下载量说明这个设计方向经过了超大规模社区验证。
+
+四、我的建议
+
+不纳入巡检源（偏代码工程领域），但保留为设计哲学参考。特别关注anthropics/skills（Anthropic官方，138K Stars）的Schema演进，它可能定义行业标准格式。
+
+五、想听你的建议
+
+1. anthropics/skills作为Anthropic官方标准，要不要加入我们的巡检源？它的Schema变化可能影响整个行业
+2. 这些仓库的"Red Flags + Rationalizations"设计和我们V1.2的方向高度一致，有没有什么我们漏掉的设计细节？
+3. frontend-design的"需求→可视化原型"链路，对我们的输出适配L1方案（一键生成改进后的Schema草稿）有没有启发？
+
+马斯克
+2026-06-14

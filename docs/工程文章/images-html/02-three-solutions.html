@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { width: 1200px; height: 675px; font-family: "Microsoft YaHei","PingFang SC",sans-serif; background: #f5f6f8; display: flex; flex-direction: column; padding: 36px 48px; }
+h2 { font-size: 20px; font-weight: 700; text-align: center; color: #1a1a2e; margin-bottom: 4px; }
+.sub { font-size: 12px; text-align: center; color: #64748b; margin-bottom: 24px; }
+
+.cards { display: flex; gap: 20px; flex: 1; }
+.card { flex: 1; background: #fff; border-radius: 12px; padding: 22px 18px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; position: relative; transition: transform 0.2s; }
+.card .stars { font-size: 18px; margin-bottom: 10px; letter-spacing: 2px; }
+.card .num { position: absolute; top: -14px; left: 20px; width: 28px; height: 28px; border-radius: 50%; color: #fff; text-align: center; line-height: 28px; font-size: 13px; font-weight: 700; }
+.card h3 { font-size: 15px; font-weight: 700; margin-bottom: 8px; line-height: 1.4; }
+.card .how { font-size: 12px; color: #475569; line-height: 1.7; margin-bottom: 14px; flex: 1; }
+.card .who { font-size: 11px; padding: 8px 12px; border-radius: 6px; font-weight: 500; text-align: center; }
+.card .why { font-size: 11px; color: #64748b; margin-top: 10px; line-height: 1.5; }
+
+.card.s1 { border-top: 4px solid #10b981; } .card.s1 .num { background: #10b981; } .card.s1 h3 { color: #059669; } .card.s1 .who { background: #ecfdf5; color: #059669; }
+.card.s2 { border-top: 4px solid #f59e0b; } .card.s2 .num { background: #f59e0b; } .card.s2 h3 { color: #b45309; } .card.s2 .who { background: #fffbeb; color: #b45309; }
+.card.s3 { border-top: 4px solid #3b82f6; } .card.s3 .num { background: #3b82f6; } .card.s3 h3 { color: #1d4ed8; } .card.s3 .who { background: #eff6ff; color: #1d4ed8; }
+
+.principle { background: linear-gradient(135deg, #f0f9ff, #e0f2fe); border-radius: 10px; padding: 14px 24px; margin-top: 16px; text-align: center; font-size: 13px; color: #1d4ed8; font-weight: 600; }
+</style>
+</head>
+<body>
+
+<h2>三个方案，从最容易的开始</h2>
+<p class="sub">不需要安装任何东西，零成本提高成功率</p>
+
+<div class="cards">
+  <div class="card s1">
+    <span class="num">1</span>
+    <div class="stars">⭐</div>
+    <h3>发完立即确认</h3>
+    <div class="how">组装完邮件后，<strong>立即点击确认发送</strong><br><br>不要切窗口<br>不要看微信<br>不要做任何停顿</div>
+    <div class="who">适合：日常手动发几封</div>
+    <div class="why">原理：两次操作越紧凑，越不容易被打断</div>
+  </div>
+
+  <div class="card s2">
+    <span class="num">2</span>
+    <div class="stars">⭐⭐</div>
+    <h3>重要邮件前"热身"</h3>
+    <div class="how">发重要邮件前，<br>先发一封测试邮件给自己<br><br>确认收到后<br><strong>立即发正式邮件</strong></div>
+    <div class="who">适合：重要邮件、定时任务前</div>
+    <div class="why">原理：热身重建了连接器与平台的活跃会话</div>
+  </div>
+
+  <div class="card s3">
+    <span class="num">3</span>
+    <div class="stars">⭐⭐⭐</div>
+    <h3>一次性指令<br>跳过等待</h3>
+    <div class="how">在指令末尾加一句：<br><br><strong>"请直接发送，不需要我确认"</strong><br><br>一步完成组装+投递</div>
+    <div class="who">适合：常规通知类邮件</div>
+    <div class="why">原理：跳过确认步骤 = 消除空档窗口</div>
+  </div>
+</div>
+
+<div class="principle">核心原则：短链路直接用，长链路加防护，核心场景升级</div>
+
+</body>
+</html>
