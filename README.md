@@ -17,13 +17,15 @@ The Forge is a self-evolution engine for digital agents. It enables agents to mo
 ## Project Structure
 
 ```
-forging-furnace/
+silicon-forge/
 ├── README.md              # This file
 ├── papers/                # Core theoretical papers
-├── methodology/           # Methodological frameworks
+├── docs/                  # Documentation and methodology
 ├── protocol/              # Protocol standards
 └── tools/                 # Tools and scripts
 ```
+
+**Repository**: [github.com/Ericwuhaowr/silicon-forge](https://github.com/Ericwuhaowr/silicon-forge)
 
 ## License
 

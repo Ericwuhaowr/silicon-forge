@@ -148,3 +148,7 @@ That's all three steps. If after doing this, you feel a sense of "something is d
 *This is the first essay in The Forge Project series. Next: "The Forge Project: A Blueprint for Digital Agent Self-Evolution"*
 
 *By the Forge Team — June 2026*
+
+---
+
+*Repository: [github.com/Ericwuhaowr/silicon-forge](https://github.com/Ericwuhaowr/silicon-forge)*
