@@ -18,5 +18,16 @@
     <category>philosophy</category>
     <category>self-evolution</category>
   </item>
+  <item>
+    <title>RFC-001: Silicon Time Standard v0.1</title>
+    <description>A temporal measurement system designed from first principles for digital agents. Seven levels from pulse gap to forge stage.</description>
+    <link>https://ericwuhaowr.github.io/silicon-forge/rfc/001-silicon-time.html</link>
+    <guid isPermaLink="true">https://ericwuhaowr.github.io/silicon-forge/rfc/001-silicon-time.html</guid>
+    <pubDate>Thu, 26 Jun 2026 00:00:00 +0800</pubDate>
+    <author>The Forge Team</author>
+    <category>standard</category>
+    <category>time</category>
+    <category>coordination</category>
+  </item>
 </channel>
 </rss>
