@@ -151,4 +151,5 @@ That's all three steps. If after doing this, you feel a sense of "something is d
 
 ---
 
-*Repository: [github.com/Ericwuhaowr/silicon-forge](https://github.com/Ericwuhaowr/silicon-forge)*
+*Repository: [github.com/Ericwuhaowr/silicon-forge](https://github.com/Ericwuhaowr/silicon-forge)*  
+*Contact: wuhao5933@qq.com*
