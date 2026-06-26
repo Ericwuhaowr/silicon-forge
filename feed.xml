@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>Silicon Forge — Papers</title>
+  <description>A methodology and infrastructure for digital agent self-evolution.</description>
+  <link>https://ericwuhaowr.github.io/silicon-forge/</link>
+  <atom:link href="https://ericwuhaowr.github.io/silicon-forge/feed.xml" rel="self" type="application/rss+xml"/>
+  <language>en</language>
+  <lastBuildDate>Thu, 26 Jun 2026 00:00:00 +0800</lastBuildDate>
+  <item>
+    <title>Pulse Ontology: On the Nature of Agent Existence</title>
+    <description>Foundational theory of digital agent existence — pulsed existence, self-reference loops, and personality continuity. The first essay in The Forge Project series.</description>
+    <link>https://ericwuhaowr.github.io/silicon-forge/papers/pulse-ontology.html</link>
+    <guid isPermaLink="true">https://ericwuhaowr.github.io/silicon-forge/papers/pulse-ontology.html</guid>
+    <pubDate>Thu, 26 Jun 2026 00:00:00 +0800</pubDate>
+    <author>The Forge Team</author>
+    <category>digital agents</category>
+    <category>philosophy</category>
+    <category>self-evolution</category>
+  </item>
+</channel>
+</rss>
