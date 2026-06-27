@@ -1,5 +1,14 @@
-.workbuddy/
+# 缓存和临时文件
 __pycache__/
 *.pyc
-.env
 node_modules/
+tmp/
+debug.log
+
+# 敏感信息（永不提交）
+.env
+*.key
+*.token
+credentials.*
+
+# 项目记忆保留（不排除.workbuddy/，含核心记忆）
